@@ -27,9 +27,18 @@ module.exports = {
     rules: [
     // JS
     {
-      test: /\.(js|jsx|tsx|ts)$/,
+      test: /\.(ts|js)x?$/i,
       exclude: /node_modules/,
-      use: ['babel-loader'],
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            "@babel/preset-env",
+            "@babel/preset-react",
+            "@babel/preset-typescript",
+          ],
+        }
+      }
     },{
       test: /\.(png|jpg|gif|svg)$/,
       loader: 'file-loader',
@@ -49,17 +58,17 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [".tsx", ".ts", "js"]
+    extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
 
   plugins: [
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin({
-      patterns: [
-        {from: `${PATHS.src}/${PATHS.assets}icon`,
-        to: `${PATHS.assets}icon`}
-      ]
-    }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     {from: `${PATHS.src}/${PATHS.assets}icon`,
+    //     to: `${PATHS.assets}icon`}
+    //   ]
+    // }),
     new HtmlWebpackPlugin({
       template: `${PATHS.src}/index.html`,
       filename: 'index.html',
